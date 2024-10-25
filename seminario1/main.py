@@ -113,4 +113,4 @@ def menu() :
     return
 
 if __name__ == '__main__':
-    menu()
+    print("Hola mundo")
