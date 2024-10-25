@@ -44,3 +44,14 @@ CREATE USER usuario WITH PASSWORD 'password'; # Create user
 ALTER USER usuario WITH SUPERUSER; # Give superuser permission to the user
 \q # exit
 ```
+
+## Ejecutar proyecto
+
+Para ejecutar el proyecto podemos simplemente clonar el repositorio y si no hemos replicado el entorno necesitaremos tener instalado en nuestro sistema todo lo anterior. En caso de tener el entorno deberemos inicializar el estado de la base de datos mediante los scripts .sql, que se encuentran en la carpeta `seminario1/sql`. 
+```bash
+\c postgres # Conectarse a la base de datos postgres
+CREATE DATABASE stock; # Crear base de datos stock
+\c stock # Conectarse a la base de datos stock
+\i crear_stock.sql # Ejecutar script de SQL para crear tabla
+```
+No te olvides de modificar el fichero `.env` con los datos de tu usuario y contraseña de PostgreSQL.
