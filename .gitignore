@@ -1,3 +1,4 @@
 LICENSE
 pgdata/*
 logfile
+.env
