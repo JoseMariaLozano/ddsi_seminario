@@ -18,7 +18,11 @@ Deberá ejecutar lo siguiente:
 source activate base
 conda activate DDSI
 ```
+Temdreis que añadir si no esta añadido al PATH de nuestro sistema las siguiente rutas (dependiendo de donde tengamos instalado la carpeta de anaconda):
+```bash
+export PATH ="$HOME/anaconda3/bin:$HOME/anaconda3/condabin:$PATH"
 
+```
 **Paso 2** Inicializar PostgreSQL y crear una base de datos. Abrimos una terminal y ejecutamos (debemos tener el entorno DDSI activado):
 ```bash
 mkdir <nombre_directorio_trabajo>
