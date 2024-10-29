@@ -2,6 +2,11 @@ import psycopg2 as pg
 from dotenv import load_dotenv
 import os
 
+path_scripts_sql = [
+    './sql/crear_stock.sql',
+    './sql/crear_pedido.sql',
+    './sql/crear_detalle_pedido.sql'
+]
 
 # Cargar las variables de entorno del archivo .env.
 def cargar_configuracion():
@@ -33,11 +38,27 @@ def cerrar_conexion(conn, cur):
     cur.close()
     conn.close()
 
-# Funcionalidades del menú
+# Funcionalidades del menú, (eliminar los return cuando se haga la implementacion)
 
-def borrado_creacion() :
+def borrado_creacion(conn, cur, path_scripts_sql) :
+
+    try:
+        for sql_script in path_scripts_sql:
+            # Leemos cada path y ejecutamos el script
+            with open(sql_script) as script:
+                sql_script = script.read()
+
+            cur.execute(sql_script)
+            
+            conn.commit() # Comiteamos los cambios ya que la creacion de las tablas ha sido correcta
+            print("Tablas creadas")
+
+    except Exception as e:
+        print(f"Hubo un error creando las tablas {e}")
+        conn.rollback() # Volveria al SAVEPOINT s1 creado antes de mostrar el menu
     
-    return
+    # Fin de la funcion borrado_creacion
+
 
 def dar_alta_pedido() :
 
@@ -59,9 +80,11 @@ def mostrar_tablas() :
 
     return
 
-def salir() :
+def salir(conn, cur) :
 
-    return
+    cerrar_conexion(conn, cur)
+
+    # Fin de la función salir
 
 # Fin funcionalidades del menú
 
@@ -96,9 +119,9 @@ def menu() :
         else:
             print("Opción no válida.")
 
-    cerrar_conexion(conn, cur)  # Cierra la conexión al finalizar
+    salir(conn, cur)  # salir del menu
 
-    # 1.- Borrado y creación de las tablas e inserción de 10 tuplas predefinidas en el código en la tabla Stock.
+    # 1.- Borrado y creación de las tablas e inserción de 10 tuplas predefinidas en el código en la tabla Stock. (HECHO)
     # .... implementación en una funcion
 
     # 2.- Dar de alta nuevo pedido
@@ -107,10 +130,10 @@ def menu() :
     # 3.- Mostrar contenido de las tablas de la BD
     # ... implementación en una función
 
-    # 4.- Salir del programa y cerrar conexión con la BD
+    # 4.- Salir del programa y cerrar conexión con la BD (HECHO)
     # ... implementación en una función
 
     return
 
 if __name__ == '__main__':
-    print("Hola mundo")
+    print("Hola mundo") # Cambiar por menu() cuando toda la funcionalidad esté implementada
