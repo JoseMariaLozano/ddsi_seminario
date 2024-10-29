@@ -39,13 +39,13 @@ def cerrar_conexion(conn, cur):
     conn.close()
 
 # Funcionalidades del menú, (eliminar los return cuando se haga la implementacion)
-
 def borrado_creacion(conn, cur, path_scripts_sql) :
 
     try:
+        # Selecionamos cada uno de los scripts
         for sql_script in path_scripts_sql:
             # Leemos cada path y ejecutamos el script
-            with open(sql_script) as script:
+            with open(sql_script) as script: # No hay que cerrar explicitamente ya que with llama a __exit__
                 sql_script = script.read()
 
             cur.execute(sql_script)
@@ -57,7 +57,7 @@ def borrado_creacion(conn, cur, path_scripts_sql) :
         print(f"Hubo un error creando las tablas {e}")
         conn.rollback() # Volveria al SAVEPOINT s1 creado antes de mostrar el menu
     
-    # Fin de la funcion borrado_creacion
+# Fin de la funcion borrado_creacion
 
 
 def dar_alta_pedido() :
@@ -83,8 +83,8 @@ def mostrar_tablas() :
 def salir(conn, cur) :
 
     cerrar_conexion(conn, cur)
+# Fin de la función salir
 
-    # Fin de la función salir
 
 # Fin funcionalidades del menú
 
