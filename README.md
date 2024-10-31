@@ -57,7 +57,7 @@ psql -d postgres # Entrar en postgres para ejecutar comandos
 \c postgres # Conectarse a la base de datos postgres
 CREATE DATABASE paqueteria; # Crear base de datos paqueteria
 \c paqueteria # Conectarse a la base de datos stock
-\i ~/ddsi_seminario/seminario1/sql/crear_stock.sql # Ejecutar script de SQL para crear tabla 
+\i ~/ddsi_seminario/seminario1/sql/crear_stock.sql # Ejecutar script para crear tabla
 ```
 
 No te olvides de modificar el fichero `.env` con los datos de tu usuario y contraseña de PostgreSQL, puedes usar los mismos que vienen por defecto.
