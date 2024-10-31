@@ -55,9 +55,9 @@ Para ejecutar el proyecto podemos simplemente clonar el repositorio y tener inst
 ```bash
 psql -d postgres # Entrar en postgres para ejecutar comandos
 \c postgres # Conectarse a la base de datos postgres
-CREATE DATABASE paqueteria; # Crear base de datos paqueteria (B2-SEUR si quereis) 
+CREATE DATABASE paqueteria; # Crear base de datos paqueteria
 \c paqueteria # Conectarse a la base de datos stock
-\i ~/ddsi_seminario/seminario1/sql/crear_stock.sql # Ejecutar script de SQL para crear tabla (en caso de haber clonado el repositorio en el home)
+\i ~/ddsi_seminario/seminario1/sql/crear_stock.sql # Ejecutar script de SQL para crear tabla 
 ```
 
 No te olvides de modificar el fichero `.env` con los datos de tu usuario y contraseña de PostgreSQL, puedes usar los mismos que vienen por defecto.
@@ -65,7 +65,7 @@ Además serán útiles los sigueintes comandos para moverse por el entorno de Po
 ```bash
 \c nombre_bd # Te conecta a la base de datos con nombre nombre_bd
 \dt # Una vez conectado a una base de datos te lista las tablas 
-SELECT * FROM nombre_tabla; # Te muestra todas las filas de una tabla (util para ver si las inserciones han sido correctas)
+SELECT * FROM nombre_tabla; # Te muestra todas las filas de una tabla 
 \h # Te muestra todas las ordenes que se pueden mandar a la base de datos
 ```
 

@@ -2,6 +2,7 @@ import psycopg2 as pg
 from dotenv import load_dotenv
 import os
 
+# Guardar las rutas de los scripts en una lista
 path_scripts_sql = [
     './sql/crear_stock.sql',
     './sql/crear_pedido.sql',
