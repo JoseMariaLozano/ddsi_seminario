@@ -9,7 +9,7 @@ Los scripts sql están todos hechos y queda por implementar el main.py. Debemos 
 
 **Tarea 2** Función dar_alta_pedido, es la opción 2 del menu (persona_encargada=elegidla vosotros y decidlo por el grupo de Whatsapp para que cambie esto), esta tarea a su vez tiene 4 tareas internas que son las que tendrán que hacer ROLLBACK, COMMIT y estas cosas. Yo si teneis alguna duda decidme y lo miro pero repartiroslo entre vosotros.
 
-**Tarea 3** Funcion mostrar_tablas, es la opción 3 del menu (persona_encargada=elegidla vosotros y decidlo por el grupo de Whatsapp para que cambie esto)
+**Tarea 3** Funcion mostrar_tablas, es la opción 3 del menu (persona_encargada=Ángel Rodríguez Faya)
 
 **Tarea 4** Función salir, es la opción 4 del menu (persona_encargada=Jose Maria Lozano Umbria) ya está hecho
 
