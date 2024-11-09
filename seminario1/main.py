@@ -77,10 +77,31 @@ def dar_alta_pedido() :
 
     return
 
-def mostrar_tablas() :
+def mostrar_tablas(cur):
+    try:
+        # Obtener todos los nombres de tablas en la base de datos
+        cur.execute("""
+            SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = 'public';
+        """)
+        tablas = cur.fetchall()
 
-    return
-
+        # Mostrar los datos de cada tabla
+        for (tabla,) in tablas:
+            print(f"\nContenido de la tabla '{tabla}':")
+            cur.execute(f"SELECT * FROM {tabla};")
+            registros = cur.fetchall()
+            
+            # Imprimir los registros de la tabla
+            if registros:
+                for registro in registros:
+                    print(registro)
+            else:
+                print("La tabla está vacía.")
+    except Exception as e:
+        print(f"Hubo un error al mostrar las tablas: {e}")
+        
 def salir(conn, cur) :
 
     cerrar_conexion(conn, cur)
