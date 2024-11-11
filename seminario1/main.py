@@ -25,7 +25,7 @@ def obtener_variables_entorno():
 # Establecer la conexión con la base de datos y crear el cursor.
 def conectar_base_datos(db_host, db_name, db_user, db_passwd):
     conn = pg.connect(
-        database=db_name,
+        database="stock",
         user=db_user,
         password=db_passwd,
         host=db_host
@@ -61,7 +61,7 @@ def borrado_creacion(conn, cur, path_scripts_sql) :
 # Fin de la funcion borrado_creacion
 
 
-def dar_alta_pedido() :
+def dar_alta_pedido(cur) :
 
     # 1.- Añadir detalle al producto
     #....
@@ -75,9 +75,66 @@ def dar_alta_pedido() :
     # 4.- Finalizar pedido
     #....
 
-    return
+    #APARTADO UNO
+    try:
+        # Obtener un nuevo ID de pedido
+        cur.execute("SELECT COALESCE(MAX(cpedido), 0) + 1 FROM pedido")
+        nuevo_cpedido = cur.fetchone()[0]
+        
+        ccliente = int(input("Ingrese el código del cliente: "))
+        
+        # Insertar el nuevo pedido en la tabla pedido
+        cur.execute("INSERT INTO pedido (cpedido, ccliente) VALUES (%s, %s)", (nuevo_cpedido, ccliente))
+        
+        while True:
+            print("\nOpciones de gestión del pedido:")
+            print("1. Añadir detalle al pedido")
+            print("2. Eliminar todos los detalles de un producto")
+            print("3. Finalizar gestión del pedido")
+            opcion = input("Elige una opción: ")
 
-def mostrar_tablas(cur):
+            if opcion == "1":
+                # Añadir detalle al producto
+                cproducto = int(input("Ingrese el código del producto: "))
+                cantidad = int(input("Ingrese la cantidad deseada: "))
+
+                # Verificar si hay suficiente stock
+                cur.execute("SELECT cantidad FROM stock WHERE cproducto = %s", (cproducto,))
+                stock_disponible = cur.fetchone()
+
+                if stock_disponible and stock_disponible[0] >= cantidad:
+                    # Si hay suficiente, insertar en detalle_pedido y actualizar stock
+                    cur.execute("INSERT INTO detalle_pedido (cpedido, cproducto, cantidad) VALUES (%s, %s, %s)", 
+                                (nuevo_cpedido, cproducto, cantidad))
+                    cur.execute("UPDATE stock SET cantidad = cantidad - %s WHERE cproducto = %s", (cantidad, cproducto))
+                    print(f"Producto {cproducto} agregado al pedido.")
+                else:
+                    print("Stock insuficiente para el producto.")
+
+            elif opcion == "2":
+                # Eliminar todos los detalles de un producto
+                cproducto = int(input("Ingrese el código del producto a eliminar de todos los pedidos: "))
+                cur.execute("DELETE FROM detalle_pedido WHERE cproducto = %s", (cproducto,))
+                print(f"Se han eliminado todos los detalles del producto con código {cproducto} en los pedidos.")
+                
+            elif opcion == "3":
+                # Finalizar la gestión del pedido
+                break
+            
+            else:
+                print("Opción no válida.")
+
+        # Confirmar los cambios
+        cur.connection.commit()
+        print("Pedido registrado y gestión completada con éxito.")
+
+    except Exception as e:
+            print(f"Error al gestionar el pedido: {e}")
+            cur.connection.rollback()
+
+
+def mostrar_tablas(cur) :
+
     try:
         # Obtener todos los nombres de tablas en la base de datos
         cur.execute("""
@@ -102,6 +159,8 @@ def mostrar_tablas(cur):
     except Exception as e:
         print(f"Hubo un error al mostrar las tablas: {e}")
         
+    return
+
 def salir(conn, cur) :
 
     cerrar_conexion(conn, cur)
@@ -158,4 +217,8 @@ def menu() :
     return
 
 if __name__ == '__main__':
-    print("Hola mundo") # Cambiar por menu() cuando toda la funcionalidad esté implementada
+    cargar_configuracion()  # Carga la configuración
+    variables_db = obtener_variables_entorno()  # Obtiene las variables de entorno
+    conn, cur = conectar_base_datos(**variables_db)  # Conecta a la base de datos
+
+    dar_alta_pedido(cur) # Cambiar por menu() cuando toda la funcionalidad esté implementada
