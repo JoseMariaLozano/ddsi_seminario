@@ -58,6 +58,9 @@ def borrado_creacion(conn, cur, path_scripts_sql) :
         print(f"Hubo un error creando las tablas {e}")
         conn.rollback() # Volveria al SAVEPOINT s1 creado antes de mostrar el menu
     
+    # mostrar_tablas(cur)
+
+    
 # Fin de la funcion borrado_creacion
 
 
@@ -88,6 +91,8 @@ def dar_alta_pedido(cur) :
             opcion = input("Elige una opción: ")
 
             if opcion == "1":
+                os.system("clear")
+
                 # Añadir detalle al producto
                 cproducto = int(input("Ingrese el código del producto: "))
                 cantidad = int(input("Ingrese la cantidad deseada: "))
@@ -133,6 +138,7 @@ def dar_alta_pedido(cur) :
                 mostrar_tablas(cur)
 
             elif opcion == "3":
+                os.system("clear")
                 # Cancelar el pedido: eliminamos el pedido y sus detalles y volvemos al menú principal
                 try:
                     # Savepoint antes de cancelar todo el pedido
@@ -141,15 +147,17 @@ def dar_alta_pedido(cur) :
                     cur.execute("DELETE FROM pedido WHERE cpedido = %s", (nuevo_cpedido,))
                     cur.connection.commit()
                     print("Pedido cancelado y revertido exitosamente.")
-                    return  # Salir de la función al menú principal
+                    
                 except Exception as e:
                     print(f"Error al cancelar el pedido: {e}")
                     cur.execute("ROLLBACK TO antes_de_cancelar_pedido;")
                 
                 # Mostrar tablas después de cada acción
                 mostrar_tablas(cur)
+                return  # Salir de la función al menú principal
 
             elif opcion == "4":
+                os.system("clear")
                 # Confirmar si el usuario quiere hacer permanentes los cambios
                 confirmacion = input("¿Está seguro de hacer permanentes los cambios? (s/n): ").lower()
 
@@ -242,10 +250,13 @@ def menu() :
         opcion = input("Elige una opción: ")
 
         if opcion == "1":
+            os.system("clear")
             borrado_creacion(conn, cur, path_scripts_sql)
         elif opcion == "2":
+            os.system("clear")
             dar_alta_pedido(cur)
         elif opcion == "3":
+            os.system("clear")
             mostrar_tablas(cur)
         elif opcion == "4":
             break
