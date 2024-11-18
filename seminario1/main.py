@@ -178,7 +178,8 @@ def dar_alta_pedido(cur) :
 
                 elif confirmacion == "n":
                     print("Los cambios no se han realizado. Volviendo al estado anterior.")
-                    cur.execute("ROLLBACK TO despues_de_insertar_pedido;")  # Revertir cambios a después de insertar el pedido
+                    cur.execute("ROLLBACK TO inicio_pedido;")  # Revertir cambios a antes de insertar pedido
+                    break
                 else:
                     print("Opción no válida, por favor responda con 'sí' o 'no'.")
 
