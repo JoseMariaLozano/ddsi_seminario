@@ -56,7 +56,7 @@ def borrado_creacion(conn, cur, path_scripts_sql) :
 
     except Exception as e:
         print(f"Hubo un error creando las tablas {e}")
-        conn.rollback() # Volveria al SAVEPOINT s1 creado antes de mostrar el menu
+        conn.execute("ROLLBACK TO s1;") # Volveria al SAVEPOINT s1 creado antes de mostrar el menu
     
     # mostrar_tablas(cur)
 
