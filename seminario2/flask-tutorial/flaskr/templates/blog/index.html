@@ -13,8 +13,11 @@
       <header>
         <div>
           <h1>{{ post['title'] }}</h1>
+          <!-- Aqui habria que cambiar post['username'] por post['author_id'] -->
           <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
         </div>
+        <!-- Al no existir usuario no tendría sentido que alguien pueda editar un post ya que no podemos saber si es suyo
+         pero en tal caso pues podemos simplemente eliminar la comprobación y permitir editar a cualquiera-->
         {% if g.user['id'] == post['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
         {% endif %}

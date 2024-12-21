@@ -8,6 +8,46 @@ from flaskr.db import get_db
 
 bp = Blueprint('blog', __name__)
 
+# Todo lugar de este archivo en el que se referencie al username o a la tabla user
+# deberá de ser eliminado y el username será ahora el author_id que leeremos en la
+# función create() del request.form['author_id']
+# ademas al no existir el auth.py (ya no es necesario no usaremos en ningun caso el 
+# login_required), cuando se requiera buscar un post en la bd se hará con el id incremental
+# ya que ahora no existe el concepto de "mi post" sino que los posts simplemente tienen una 
+# firma con el nombre del autor pero pertenecen a la app.
+
+"""
+Por ejemplo en la funcíón create haríamos lo siguiente:
+@bp.route('/create', methods=('GET', 'POST'))
+def create():
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['body']
+        author_id = request.form['author_id']
+        error = None
+
+        if not title:
+            error = 'Title is required.'
+
+        if not author_id:
+            error = 'Author is required.'
+            
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO post (title, body, author_id)'
+                ' VALUES (?, ?, ?)',
+                (title, body, author_id)
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/create.html')
+
+"""
+
 @bp.route('/')
 def index():
     db = get_db()

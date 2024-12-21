@@ -4,6 +4,8 @@
   <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
 {% endblock %}
 
+<!-- Aqui no se accede al username ni al author_id antiguos del post luego no habria que cambiar su funcionamiento -->
+
 {% block content %}
   <form method="post">
     <label for="title">Title</label>
